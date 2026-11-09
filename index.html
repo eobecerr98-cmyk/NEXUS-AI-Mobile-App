@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="NEXUS AI — asistente personal adaptable">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>NEXUS AI</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div><div class="brand-name">NEXUS AI</div><div class="brand-sub">ASISTENTE PERSONAL · v0.1</div></div>
+      </div>
+      <button class="icon-btn" id="settingsOpen" aria-label="Configuración">⚙</button>
+    </header>
+
+    <main class="main">
+      <section class="hero" id="welcome">
+        <div class="orb"><div class="orb-core"></div></div>
+        <div class="eyebrow">NÚCLEO INICIALIZADO</div>
+        <h1>¿Qué vamos a<br><span>crear hoy?</span></h1>
+        <p>NEXUS está preparado para ayudarte a investigar, planificar y construir proyectos.</p>
+        <div class="status-row"><span class="pulse"></span><span id="connectionLabel">Modo local · memoria en este dispositivo</span></div>
+      </section>
+
+      <section class="suggestions" aria-label="Acciones sugeridas">
+        <button class="suggestion" data-prompt="Ayúdame a planificar un proyecto de Minecraft Bedrock sin placeholders."><span>◆</span><b>Crear addon</b><small>Minecraft Bedrock</small></button>
+        <button class="suggestion" data-prompt="Ayúdame a diseñar una criatura 3D original para un videojuego."><span>◇</span><b>Diseñar modelo</b><small>Modelado 3D</small></button>
+        <button class="suggestion" data-prompt="Ayúdame a programar una aplicación desde cero y dividirla en etapas."><span>⌘</span><b>Programar</b><small>Desarrollo</small></button>
+      </section>
+
+      <section class="chat-area">
+        <div class="section-heading"><span>CONVERSACIÓN</span><button id="clearChat" class="text-btn">Limpiar</button></div>
+        <div id="messages" class="messages" aria-live="polite">
+          <article class="message assistant">
+            <div class="avatar">N</div><div class="bubble"><b>Hola, soy NEXUS.</b><br>Esta es mi primera versión móvil. Puedo guardar tu conversación en este dispositivo. Para activar respuestas de un modelo de IA real, más adelante conectaremos un servidor seguro.</div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <form id="composer" class="composer">
+      <textarea id="messageInput" rows="1" maxlength="8000" placeholder="Escribe a NEXUS..." aria-label="Mensaje"></textarea>
+      <button class="send-btn" type="submit" aria-label="Enviar">↑</button>
+    </form>
+    <nav class="bottom-nav">
+      <button class="nav-item active"><span>◉</span>Chat</button>
+      <button class="nav-item" id="memoryOpen"><span>▤</span>Memoria</button>
+      <button class="nav-item" id="aboutOpen"><span>◇</span>Sistema</button>
+    </nav>
+  </div>
+
+  <dialog id="settingsDialog" class="panel">
+    <div class="panel-head"><div><div class="eyebrow">PREFERENCIAS</div><h2>Configuración</h2></div><button class="icon-btn close-dialog" aria-label="Cerrar">×</button></div>
+    <label class="field-label" for="assistantName">Nombre</label><input id="assistantName" value="NEXUS AI">
+    <label class="field-label" for="personality">Personalidad</label>
+    <select id="personality"><option>Adaptativa</option><option>Analítica</option><option>Creativa</option><option>Técnica</option></select>
+    <label class="field-label" for="backendUrl">Servidor de IA (opcional)</label><input id="backendUrl" type="url" placeholder="https://tu-servidor.example">
+    <p class="hint">No pegues claves secretas de proveedores aquí. La conexión real se hará mediante un servidor protegido.</p>
+    <button id="saveSettings" class="primary-btn">Guardar configuración</button>
+  </dialog>
+
+  <dialog id="memoryDialog" class="panel">
+    <div class="panel-head"><div><div class="eyebrow">MEMORIA LOCAL</div><h2>Conversación guardada</h2></div><button class="icon-btn close-dialog">×</button></div>
+    <p class="hint">Los mensajes de esta versión se guardan en el almacenamiento del navegador de este dispositivo.</p>
+    <div id="memorySummary" class="memory-summary"></div>
+    <button id="exportMemory" class="secondary-btn">Exportar conversación</button>
+    <button id="eraseMemory" class="danger-btn">Borrar memoria local</button>
+  </dialog>
+
+  <dialog id="aboutDialog" class="panel">
+    <div class="panel-head"><div><div class="eyebrow">ESTADO DEL PROYECTO</div><h2>NEXUS v0.1</h2></div><button class="icon-btn close-dialog">×</button></div>
+    <div class="system-card"><span class="green-dot"></span><div><b>Aplicación móvil</b><small>Interfaz PWA lista para instalar</small></div></div>
+    <div class="system-card"><span class="green-dot"></span><div><b>Memoria local</b><small>Almacenamiento del navegador</small></div></div>
+    <div class="system-card"><span class="yellow-dot"></span><div><b>Modelo de IA</b><small>Pendiente de conectar a un backend seguro</small></div></div>
+    <div class="system-card"><span class="yellow-dot"></span><div><b>Agentes y herramientas</b><small>Planificados para próximas versiones</small></div></div>
+    <p class="hint">Esta versión no ejecuta acciones externas ni afirma haber realizado pruebas que no se hayan ejecutado.</p>
+  </dialog>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(console.warn));
+    }
+  </script>
+</body>
+</html>
